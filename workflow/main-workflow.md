@@ -48,12 +48,12 @@ All the files are in the `/template` folder.
 
 In `CLAUDE.md` inside the project a message will direct the agent to read these files that will be included in the `/context` folder:
 
-| File | Purpose |
-| --- | --- |
-| `project-overview.md` | The project specs that can be created and refined with AI |
+| File                  | Purpose                                                                      |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `project-overview.md` | The project specs that can be created and refined with AI                    |
 | `coding-standards.md` | Coding style and rules — <https://cursor.directory/> contains best practices |
-| `ai-interaction.md` | How the AI must interact and communicate |
-| `current-feature.md` | The feature we are working right now |
+| `ai-interaction.md`   | How the AI must interact and communicate                                     |
+| `current-feature.md`  | The feature we are working right now                                         |
 
 ## 4. Creating Features
 
@@ -89,6 +89,12 @@ The same way we create a screenshot as reference, we can create dummy data for o
 Then in `context/feature` we create the spec file for each feature or each part of a feature. The prompt should be:
 
 > Update the `@context/current-feature.md` to add the feature from `@dashboard-phase-1-spec.md` [or the relevant spec file]. Set the status to in progress.
+
+> Create a new branch and implement the `@context/current-feature.md`.
+
+> Update the current feature file as completed and proceed to commit and push, and delete the old branch.
+
+We can create a test file in `@scripts/test.ts` and update for each feature (once the feature is implemented ask to update the test file) and check if the changes worked each time.
 
 ### Closing the Loop
 

@@ -7,19 +7,20 @@ coding standards, and checklists I copy from when working on projects.
 
 ## What's here
 
-| Folder         | What it holds                                                                    |
-|----------------|----------------------------------------------------------------------------------|
-| `prompts/`     | Reusable prompts (e.g. prototype/mock-up prompt for Stitch, V0, Lovable)          |
-| `templates/`   | Starter context files: project-overview, coding-standards, ai-interaction, current-feature |
-| `standards/`   | Per-language coding standards + high-level architecture diagrams (frontend, TypeScript, React, Vue) |
-| `workflows/`   | Step-by-step SOPs / checklists for my dev flow (see `workflows/main-workflow.md`) |
-| `screenshots/` | Design reference images used as UI mock-up examples                               |
+| Folder          | What it holds                                                                    |
+|-----------------|----------------------------------------------------------------------------------|
+| `prompts/`      | Reusable prompts (e.g. prototype/mock-up prompt for Stitch, V0, Lovable)          |
+| `templates/`    | Starter context files: project-overview, coding-standards, ai-interaction, current-feature |
+| `skills/`       | Custom skill / slash-command definitions (feature, research, cleanup, list-components) |
+| `standards/`    | Per-language coding standards + high-level architecture diagrams (frontend, TypeScript, React, Vue) |
+| `workflow/`     | Step-by-step SOPs / checklists for my dev flow (see `workflow/main-workflow.md`)  |
+| `_screenshots/` | Design reference images used as UI mock-up examples                               |
 
 ## How I use it
 
 Browse to the relevant folder and copy what I need into the active project.
 The full process — from project spec to feature loop — is documented in
-[`workflows/main-workflow.md`](workflows/main-workflow.md).
+[`workflow/main-workflow.md`](workflow/main-workflow.md).
 
 ## Adding a new language
 
