@@ -11,7 +11,7 @@ coding standards, and checklists I copy from when working on projects.
 |-----------------|----------------------------------------------------------------------------------|
 | `prompts/`      | Reusable prompts (e.g. prototype/mock-up prompt for Stitch, V0, Lovable)          |
 | `templates/`    | Starter context files: project-overview, coding-standards, ai-interaction, current-feature |
-| `skills/`       | Custom skill / slash-command definitions (feature, research, cleanup, list-components) |
+| `.claude/skills/` | Custom skill / slash-command definitions (feature, research, cleanup, list-components) — auto-loaded by Claude Code when working in this repo; copy into other projects' `.claude/skills/` to use them there |
 | `standards/`    | Per-language coding standards + high-level architecture diagrams (frontend, TypeScript, React, Vue) |
 | `workflow/`     | Step-by-step SOPs / checklists for my dev flow (see `workflow/main-workflow.md`)  |
 | `_screenshots/` | Design reference images used as UI mock-up examples                               |
