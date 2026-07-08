@@ -1,6 +1,6 @@
 # Main Workflow
 
-Each section below shows the **manual way** (prompts you write yourself) and, where one exists, the **faster way** using the reusable skills in `.claude/skills/` (marked with ⚡). See the [Skills Reference](#5-skills-reference) at the end.
+Each section below shows the **manual way** — prompts you write yourself, with no reusable skills involved. See `skills-workflow.md` for the faster, skill-based version of this same workflow.
 
 ## 1. Project Specs
 
@@ -17,8 +17,6 @@ This defines the main guidelines in terms of:
 - The tech stack used
 - Monetization (if any)
 - UX main components
-
-> ⚡ **Skill:** later, once the codebase exists, `/research <prompt-name>` generates documentation the same way — it reads a prompt file from `context/research/<prompt-name>.md` (output location, what to investigate, sources) and writes the findings to `/docs/`, without touching source code.
 
 ## 2. Creating the App
 
@@ -50,8 +48,6 @@ Run `/init` first to let Claude generate a baseline `CLAUDE.md`, then replace/ex
 
 All the files are in the `/template` folder.
 
-> ⚡ **Skill:** also copy the reusable skills from this repo's `.claude/skills/` folder into the new project's `.claude/skills/` so `/feature`, `/cleanup`, `/list-components` and `/research` are available there (restart Claude Code to pick them up).
-
 In `CLAUDE.md` inside the project a message will direct the agent to read these files that will be included in the `/context` folder:
 
 | File                  | Purpose                                                                      |
@@ -65,31 +61,17 @@ In `CLAUDE.md` inside the project a message will direct the agent to read these 
 
 This is the common workflow for every single feature/fix:
 
-1. **Document** — Document the feature in `@context/current-feature.md` by using a spec file and asking AI to update `@current-feature` — ⚡ `/feature load <spec-name or description>`
-2. **Branch** — Create new branch for feature, fix, etc — ⚡ `/feature start` (creates the branch from the feature name)
-3. **Implement** — Implement the feature/fix that I create in `@context/current-feature.md` — ⚡ `/feature start` (implements the goals one by one)
-4. **Test** — Verify it works in the browser. Implement unit testing later. Run `npm run build` and fix any errors — ⚡ `/feature test` (writes/updates Vitest unit tests and runs them)
+1. **Document** — Document the feature in `@context/current-feature.md` by using a spec file and asking AI to update `@current-feature`
+2. **Branch** — Create new branch for feature, fix, etc
+3. **Implement** — Implement the feature/fix that I create in `@context/current-feature.md`
+4. **Test** — Verify it works in the browser. Implement unit testing later. Run `npm run build` and fix any errors
 5. **Iterate** — Iterate and change things if needed
-6. **Commit** — Only after build passes and everything works (PR in a team env) — ⚡ `/feature complete`
-7. **Merge** — Merge to main — ⚡ `/feature complete`
-8. **Delete Branch** — Delete branch after merge — ⚡ `/feature complete`
+6. **Commit** — Only after build passes and everything works (PR in a team env)
+7. **Merge** — Merge to main
+8. **Delete Branch** — Delete branch after merge
 9. **Deploy** — Push to production and test the production version
-10. **Review** — Review AI-generated code periodically and on demand — ⚡ `/feature review` (goals met, quality, scope creep) · `/feature explain` (what changed and why) · `/cleanup check` (periodic housekeeping)
-11. **Mark Complete** — Mark as completed in `@context/current-feature.md` and add to history — ⚡ `/feature complete` (resets the file and appends to History)
-
-### ⚡ The Faster Way — Skill Loop
-
-The whole cycle above condenses to:
-
-```text
-/feature load dashboard-phase-1-spec   # document: fill current-feature.md from the spec
-/feature start                         # branch + implement the goals
-/feature test                          # unit tests (Vitest) for actions/utilities
-/feature review                        # verify goals met, quality, no scope creep
-/feature complete                      # commit, merge to main, delete branch, update history, push
-```
-
-Steps 5 (Iterate) and 9 (Deploy) stay manual.
+10. **Review** — Review AI-generated code periodically and on demand
+11. **Mark Complete** — Mark as completed in `@context/current-feature.md` and add to history
 
 ### Mock-ups & Dummy Data
 
@@ -110,19 +92,11 @@ Then in `context/feature` we create the spec file for each feature or each part 
 
 > Update the `@context/current-feature.md` to add the feature from `@dashboard-phase-1-spec.md` [or the relevant spec file]. Set the status to in progress.
 
-⚡ Skill equivalent: `/feature load dashboard-phase-1-spec` (also accepts an inline description instead of a spec file).
-
 > Create a new branch and implement the `@context/current-feature.md`.
-
-⚡ Skill equivalent: `/feature start`.
 
 > Update the current feature file as completed and proceed to commit and push, and delete the old branch.
 
-⚡ Skill equivalent: `/feature complete`.
-
 We can create a test file in `@scripts/test.ts` and update for each feature (once the feature is implemented ask to update the test file) and check if the changes worked each time.
-
-⚡ Skill equivalent: `/feature test` — checks which server actions/utilities the feature added, writes Vitest unit tests where they add value, and runs `npm test`.
 
 ### Closing the Loop
 
@@ -131,16 +105,3 @@ Once the feature works and the build passes, close the loop:
 > Set the current feature in `@context/current-feature.md` to completed, remove the info and add it to the history.
 
 > Commit to the feature branch, merge to main, delete the feature branch and push to remote.
-
-⚡ Skill equivalent: `/feature complete` does both of these in one step — commit, merge to main, delete the branch, reset `current-feature.md` (appending the feature to History), and a single push to origin.
-
-## 5. Skills Reference
-
-Reusable skills live in `.claude/skills/` (copy them into each project's `.claude/skills/` folder). Manual prompts always remain an option — the skills are just the faster, repeatable version.
-
-| Skill | Arguments | What it does (replaces) |
-| --- | --- | --- |
-| `/feature` | `load` \| `start` \| `test` \| `review` \| `explain` \| `complete` | Full feature lifecycle: fill `current-feature.md` from a spec, branch + implement, unit-test, review against goals, explain the diff, then commit/merge/cleanup |
-| `/cleanup` | `check` \| `run` | Housekeeping audit: history order, stray `console.log`s, unused imports, stale TODOs/`@ts-ignore`, orphaned files, context files vs. reality, `.env` parity. `check` reports only; `run` asks which items to fix |
-| `/list-components` | `[subdirectory]` | Quick numbered inventory of component files with one-line descriptions |
-| `/research` | `<prompt-name>` | Runs a research prompt from `context/research/` and writes documentation (no code changes) |
